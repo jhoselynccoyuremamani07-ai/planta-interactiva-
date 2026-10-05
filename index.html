@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#2e7d32">
+<title>Exploramos las partes de la planta</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#e8f5e9,#fffde7);
+  color:#21412a;min-height:100vh;
+}
+header{
+  background:linear-gradient(135deg,#2e7d32,#66bb6a);
+  color:white;text-align:center;padding:20px 14px;
+  box-shadow:0 3px 12px #0002;
+}
+h1{margin:0;font-size:clamp(1.5rem,5vw,2.5rem)}
+header p{margin:8px 0 0;font-size:clamp(.95rem,3vw,1.15rem)}
+main{max-width:1100px;margin:auto;padding:18px}
+.instructions{
+  background:white;border-radius:18px;padding:16px;margin-bottom:18px;
+  box-shadow:0 4px 14px #0001;text-align:center;
+}
+.instructions strong{color:#2e7d32}
+.plant-wrap{
+  background:white;border-radius:24px;padding:12px;
+  box-shadow:0 6px 20px #0002;overflow:hidden;
+}
+svg{width:100%;height:auto;display:block;touch-action:manipulation}
+.part{cursor:pointer;transition:.2s;outline:none}
+.part:hover,.part:focus{filter:brightness(1.08);transform-origin:center}
+.part text{pointer-events:none}
+.modal{
+  position:fixed;inset:0;background:#0007;display:none;
+  align-items:center;justify-content:center;padding:18px;z-index:10;
+}
+.modal.show{display:flex}
+.card{
+  background:white;width:min(560px,100%);border-radius:24px;
+  padding:24px;box-shadow:0 12px 35px #0005;
+  animation:pop .2s ease-out;
+}
+@keyframes pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.badge{
+  display:inline-block;background:#e8f5e9;color:#2e7d32;
+  padding:7px 12px;border-radius:999px;font-weight:bold;
+}
+.question{font-size:clamp(1.1rem,4vw,1.45rem);line-height:1.45;margin:16px 0}
+button{
+  border:0;border-radius:14px;padding:13px 20px;font-size:1rem;
+  font-weight:bold;cursor:pointer;background:#2e7d32;color:white;
+}
+button:active{transform:scale(.98)}
+.tip{
+  margin-top:18px;background:#fff8e1;border-left:5px solid #f9a825;
+  padding:12px;border-radius:10px;font-size:.95rem;
+}
+footer{text-align:center;padding:18px;color:#52705a;font-size:.9rem}
+@media(max-width:600px){
+  main{padding:10px}
+  .plant-wrap{padding:5px;border-radius:18px}
+  .card{padding:20px;border-radius:20px}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>🌱 Exploramos las partes de la planta</h1>
+  <p>Haz clic o toca una parte de la planta para investigar.</p>
+</header>
+
+<main>
+  <section class="instructions">
+    <strong>🔎 ¡Momento de indagación!</strong>
+    <div>Observa primero y expresa tus ideas. <b>No hay respuestas correctas o incorrectas todavía.</b></div>
+  </section>
+
+  <section class="plant-wrap">
+    <svg viewBox="0 0 800 760" role="img" aria-label="Planta interactiva">
+      <!-- fondo -->
+      <rect x="0" y="0" width="800" height="760" rx="25" fill="#f9fff8"/>
+      <rect x="70" y="625" width="660" height="45" rx="22" fill="#8d6e63"/>
+      <path d="M105 625 Q180 590 250 625 T395 625 T540 625 T695 625" fill="none" stroke="#5d4037" stroke-width="8"/>
+
+      <!-- raíces -->
+      <g class="part" tabindex="0" data-title="🌿 Raíz" data-q="¿Qué parte será esta? ¿Dónde se encuentra? ¿Qué creen que hace?">
+        <path d="M400 500 C365 545 330 575 300 625 M400 500 C390 550 385 585 380 625 M400 500 C440 545 475 575 510 625 M400 520 C430 565 545 590 590 625 M390 520 C355 565 255 585 205 625"
+              fill="none" stroke="#9a6b45" stroke-width="15" stroke-linecap="round"/>
+        <path d="M320 570 l-20 28 M285 585 l-20 28 M470 570 l20 28 M515 585 l20 28 M385 585 l-4 35"
+              stroke="#9a6b45" stroke-width="8" stroke-linecap="round"/>
+      </g>
+
+      <!-- tallo -->
+      <g class="part" tabindex="0" data-title="🌱 Tallo" data-q="¿Qué parte será esta? ¿Por qué creen que está en el centro de la planta? ¿Para qué podría servir?">
+        <path d="M400 525 C395 445 405 350 400 230" fill="none" stroke="#4f9d43" stroke-width="34" stroke-linecap="round"/>
+      </g>
+
+      <!-- hojas -->
+      <g class="part" tabindex="0" data-title="🍃 Hojas" data-q="¿Qué observamos aquí? ¿Cómo son estas partes? ¿Qué creen que hacen?">
+        <path d="M395 350 C320 285 230 300 175 355 C245 385 325 385 395 350Z" fill="#66bb6a" stroke="#2e7d32" stroke-width="6"/>
+        <path d="M405 315 C470 250 555 255 625 315 C555 350 480 350 405 315Z" fill="#81c784" stroke="#2e7d32" stroke-width="6"/>
+        <path d="M397 420 C320 375 255 410 220 465 C290 480 350 465 397 420Z" fill="#4caf50" stroke="#2e7d32" stroke-width="6"/>
+        <path d="M405 390 C480 350 560 390 600 445 C520 460 455 445 405 390Z" fill="#74c365" stroke="#2e7d32" stroke-width="6"/>
+        <path d="M200 360 Q280 340 375 350 M425 315 Q515 300 600 315 M240 455 Q315 440 380 420 M425 395 Q510 410 580 440"
+              fill="none" stroke="#2e7d32" stroke-width="4"/>
+      </g>
+
+      <!-- flor -->
+      <g class="part" tabindex="0" data-title="🌸 Flor" data-q="¿Qué parte será esta? ¿Qué creen que puede suceder en esta parte de la planta?">
+        <circle cx="400" cy="170" r="32" fill="#f9a825" stroke="#ef6c00" stroke-width="5"/>
+        <ellipse cx="400" cy="105" rx="38" ry="62" fill="#f48fb1" stroke="#c2185b" stroke-width="5"/>
+        <ellipse cx="400" cy="235" rx="38" ry="62" fill="#f48fb1" stroke="#c2185b" stroke-width="5"/>
+        <ellipse cx="335" cy="170" rx="62" ry="38" fill="#f06292" stroke="#c2185b" stroke-width="5"/>
+        <ellipse cx="465" cy="170" rx="62" ry="38" fill="#f06292" stroke="#c2185b" stroke-width="5"/>
+      </g>
+
+      <!-- fruto -->
+      <g class="part" tabindex="0" data-title="🍎 Fruto" data-q="¿Qué será esto? ¿Qué creen que podría haber dentro? ¿Para qué servirá?">
+        <path d="M615 480 C570 440 570 375 625 355 C680 375 680 440 615 480Z" fill="#ef5350" stroke="#b71c1c" stroke-width="6"/>
+        <path d="M620 360 Q630 325 655 315" fill="none" stroke="#5d4037" stroke-width="9" stroke-linecap="round"/>
+        <path d="M648 330 Q680 300 705 330 Q675 350 648 340Z" fill="#66bb6a" stroke="#2e7d32" stroke-width="5"/>
+      </g>
+
+      <!-- semilla -->
+      <g class="part" tabindex="0" data-title="🌰 Semilla" data-q="¿Qué será esto? ¿Qué creen que puede pasar con una semilla si la sembramos?">
+        <ellipse cx="175" cy="535" rx="38" ry="25" fill="#c58b5a" stroke="#795548" stroke-width="6"/>
+        <path d="M155 530 Q175 515 195 530" fill="none" stroke="#8d5e34" stroke-width="4"/>
+      </g>
+
+      <!-- pequeñas etiquetas solo visuales -->
+      <text x="400" y="710" text-anchor="middle" font-size="24" font-weight="bold" fill="#55705c">
+        Toca una parte para formular hipótesis 💭
+      </text>
+    </svg>
+  </section>
+
+  <div class="tip">
+    💡 <b>Para la docente:</b> usa las preguntas para escuchar las hipótesis de los estudiantes. Las respuestas se descubrirán durante el desarrollo de la sesión.
+  </div>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="card">
+    <span class="badge" id="modalTitle">Parte de la planta</span>
+    <div class="question" id="modalQuestion"></div>
+    <button id="close">Continuar explorando</button>
+  </div>
+</div>
+
+<footer>Actividad interactiva · Ciencia y Tecnología · 2.º de primaria</footer>
+
+<script>
+const modal=document.getElementById('modal');
+const title=document.getElementById('modalTitle');
+const question=document.getElementById('modalQuestion');
+const close=document.getElementById('close');
+
+function openPart(el){
+  title.textContent=el.dataset.title;
+  question.textContent=el.dataset.q;
+  modal.classList.add('show');
+  close.focus();
+}
+document.querySelectorAll('.part').forEach(el=>{
+  el.addEventListener('click',()=>openPart(el));
+  el.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();openPart(el)}
+  });
+});
+close.addEventListener('click',()=>modal.classList.remove('show'));
+modal.addEventListener('click',e=>{
+  if(e.target===modal) modal.classList.remove('show');
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') modal.classList.remove('show');
+});
+</script>
+</body>
+</html>
